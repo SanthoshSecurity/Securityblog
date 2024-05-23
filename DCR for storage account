@@ -14,7 +14,7 @@
     "type": "String" 
     }, 
     "storageAccountName": { 
-    "defaultValue": "twclientsa1", 
+    "defaultValue": "XXXXX", 
     "type": "String" 
     }
 }, 
@@ -52,9 +52,9 @@
         "destinations": { 
         "storageBlobsDirect": [ 
             { 
-            "storageAccountResourceId": "/subscriptions/974ee8dc-fd96-4811-a386-0893f858a4c9/resourceGroups/tw-client-1-rg/providers/Microsoft.Storage/storageAccounts/twclientsa1", 
-            "name": "blobNamedLinux", 
-            "containerName": "logsfromforwarder" 
+            "storageAccountResourceId": "XXXXX", 
+            "name": "XXXXX", 
+            "containerName": "XXXXX" 
             }
         ]
         }, 
