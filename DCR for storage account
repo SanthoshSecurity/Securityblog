@@ -1,0 +1,74 @@
+{ 
+"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#", 
+"contentVersion": "1.0.0.0", 
+"parameters": { 
+    "location": { 
+    "type": "string", 
+    "defaultValue": "[resourceGroup().location]", 
+    "metadata": { 
+        "description": "Location for all resources." 
+    } 
+    }, 
+    "dataCollectionRulesName": { 
+    "defaultValue": "[concat(resourceGroup().name, 'DCR')]", 
+    "type": "String" 
+    }, 
+    "storageAccountName": { 
+    "defaultValue": "twclientsa1", 
+    "type": "String" 
+    }
+}, 
+"resources": [ 
+    { 
+    "type": "Microsoft.Insights/dataCollectionRules", 
+    "apiVersion": "2022-06-01", 
+    "name": "[parameters('dataCollectionRulesName')]", 
+    "location": "[parameters('location')]", 
+    "kind": "AgentDirectToStore", 
+    "properties": { 
+        "dataSources": { 
+        "syslog": [ 
+            { 
+            "streams": [ 
+                "Microsoft-Syslog" 
+            ], 
+            "facilityNames": [
+                                "local4"
+                            ],
+            "logLevels": [
+                                "Debug",
+                                "Info",
+                                "Notice",
+                                "Warning",
+                                "Error",
+                                "Critical",
+                                "Alert",
+                                "Emergency"
+                            ], 
+            "name": "syslogDataSource" 
+            } 
+        ]
+        }, 
+        "destinations": { 
+        "storageBlobsDirect": [ 
+            { 
+            "storageAccountResourceId": "/subscriptions/974ee8dc-fd96-4811-a386-0893f858a4c9/resourceGroups/tw-client-1-rg/providers/Microsoft.Storage/storageAccounts/twclientsa1", 
+            "name": "blobNamedLinux", 
+            "containerName": "logsfromforwarder" 
+            }
+        ]
+        }, 
+        "dataFlows": [ 
+        { 
+            "streams": [ 
+            "Microsoft-Syslog" 
+            ], 
+            "destinations": [ 
+            "blobNamedLinux"
+            ] 
+        }
+        ] 
+    } 
+    } 
+] 
+}
